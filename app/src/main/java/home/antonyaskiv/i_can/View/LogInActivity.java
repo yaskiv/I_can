@@ -34,6 +34,7 @@ public class LogInActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_log_in);
         mAuth = FirebaseAuth.getInstance();
     }
+
     public void Click(View view)
     {
         mCallbackManager = CallbackManager.Factory.create();
@@ -69,7 +70,8 @@ public class LogInActivity extends AppCompatActivity  {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        Intent intent = new Intent(LogInActivity.this,MainActivity.class);
+        startActivity(intent);
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
@@ -82,7 +84,8 @@ public class LogInActivity extends AppCompatActivity  {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
+                            Intent intent = new Intent(LogInActivity.this,MainActivity.class);
+                            startActivity(intent);
                         } else {
                             Toast.makeText(LogInActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();

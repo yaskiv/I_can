@@ -34,6 +34,7 @@ public class LogInActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_log_in);
         mAuth = FirebaseAuth.getInstance();
     }
+
     public void Click(View view)
     {
         mCallbackManager = CallbackManager.Factory.create();

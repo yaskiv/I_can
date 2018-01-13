@@ -22,8 +22,14 @@ import javax.inject.Inject;
 import home.antonyaskiv.i_can.Presenters.ImplMapFragmentPresenter;
 import home.antonyaskiv.i_can.R;
 
-
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link MapFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link MapFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class MapFragment extends Fragment {
 
 

@@ -4,6 +4,9 @@ import android.app.Application;
 
 import com.indoorway.android.common.sdk.IndoorwaySdk;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 import home.antonyaskiv.i_can.Component.AppComponent;
 import home.antonyaskiv.i_can.Component.DaggerAppComponent;
 import home.antonyaskiv.i_can.Modules.AppModule;
@@ -22,6 +25,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
         appComponent=buildComponent();
         IndoorwaySdk.initContext(this);
 

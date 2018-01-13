@@ -6,4 +6,9 @@
     android:background="@color/colorAccent"
     tools:context="home.antonyaskiv.i_can.View.SettingsFragment">
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/log_out"/>
+
 </LinearLayout>

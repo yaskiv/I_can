@@ -1,11 +1,15 @@
 package home.antonyaskiv.i_can.View;
 
-import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import home.antonyaskiv.i_can.R;
 
@@ -20,7 +24,7 @@ public class SettingsFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
-
+    Button sign_out;
     public static SettingsFragment newInstance(String param1, String param2) {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
@@ -46,9 +50,19 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_settings, container, false);
+        View view= inflater.inflate(R.layout.fragment_settings, container, false);
+        sign_out = (Button) view.findViewById(R.id.log_out);
+        sign_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                LoginManager.getInstance().logOut();
+                firebaseAuth.signOut();
+            }
+        });
         return view;
     }
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

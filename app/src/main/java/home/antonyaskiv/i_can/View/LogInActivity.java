@@ -21,6 +21,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import home.antonyaskiv.i_can.Model.Person;
+import home.antonyaskiv.i_can.Presenters.ImplMapFragmentPresenter;
 import home.antonyaskiv.i_can.R;
 
 public class LogInActivity extends AppCompatActivity  {
@@ -44,8 +46,8 @@ public class LogInActivity extends AppCompatActivity  {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 handleFacebookAccessToken(loginResult.getAccessToken());
-                Intent intent = new Intent(LogInActivity.this,MainActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(LogInActivity.this,MainActivity.class);
+                //startActivity(intent);
 
             }
 
@@ -70,8 +72,10 @@ public class LogInActivity extends AppCompatActivity  {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        Intent intent = new Intent(LogInActivity.this,MainActivity.class);
-        startActivity(intent);
+        if(currentUser!=null) {
+            Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
@@ -84,7 +88,17 @@ public class LogInActivity extends AppCompatActivity  {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent = new Intent(LogInActivity.this,MainActivity.class);
+                            String[] firstLastName = user.getDisplayName().split(" ");
+                            Person person = new Person(firstLastName[0],firstLastName[1],null,user.getEmail(),
+                                    null,null);
+                            ImplMapFragmentPresenter.insertOrUpdatePerson(person);
+                            Intent intent;
+                            if(false != true) {
+                                //intent = new Intent(LogInActivity.this, MainActivity.class);
+                                intent = new Intent(LogInActivity.this, SelectCategoriesActivity.class);
+                            } else{
+                                intent = new Intent(LogInActivity.this, SelectCategoriesActivity.class);
+                            }
                             startActivity(intent);
                         } else {
                             Toast.makeText(LogInActivity.this, "Authentication failed.",

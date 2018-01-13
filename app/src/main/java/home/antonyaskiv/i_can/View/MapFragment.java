@@ -1,4 +1,4 @@
-package home.antonyaskiv.i_can;
+package home.antonyaskiv.i_can.View;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import javax.inject.Inject;
+
+import home.antonyaskiv.i_can.Presenters.ImplMapFragmentPresenter;
+import home.antonyaskiv.i_can.R;
 
 /**
  * A simple {@link Fragment} subclass.

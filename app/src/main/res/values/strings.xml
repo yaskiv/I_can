@@ -11,5 +11,7 @@
 
     <string name="category_sales">Sprzedaz</string>
     <string name="category_other">Other</string>
-    <string name=""></string>
+
+    <string name="facebook_app_id">324337971385321</string>
+    <string name="fb_login_protocol_scheme">fb324337971385321</string>
 </resources>

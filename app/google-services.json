@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "485516728809-ssfupe75lq0742rc3ib7br1kb926qsti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "home.antonyaskiv.i_can",
+            "certificate_hash": "73fe93b525b4623180bbdb7dcb568a73f36b0781"
+          }
+        },
+        {
           "client_id": "485516728809-25k1ub2nr2memut6pag9329fmiphsral.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

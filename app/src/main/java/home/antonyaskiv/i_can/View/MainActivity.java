@@ -1,10 +1,7 @@
 package home.antonyaskiv.i_can.View;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -17,18 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.indoorway.android.common.sdk.IndoorwaySdk;
-import com.indoorway.android.common.sdk.listeners.generic.Action1;
-import com.indoorway.android.common.sdk.model.IndoorwayMap;
-import com.indoorway.android.common.sdk.model.IndoorwayNode;
-import com.indoorway.android.common.sdk.model.IndoorwayObjectParameters;
-import com.indoorway.android.common.sdk.model.Sex;
-import com.indoorway.android.common.sdk.model.Visitor;
-import com.indoorway.android.fragments.sdk.map.IndoorwayMapFragment;
-import com.indoorway.android.map.sdk.view.IndoorwayMapView;
-
-import java.util.List;
 
 import home.antonyaskiv.i_can.R;
 
@@ -150,11 +135,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
     }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
 
 }

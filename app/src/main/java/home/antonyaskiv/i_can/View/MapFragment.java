@@ -1,4 +1,4 @@
-package home.antonyaskiv.i_can;
+package home.antonyaskiv.i_can.View;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,16 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MapFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MapFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import home.antonyaskiv.i_can.Presenters.ImplMapFragmentPresenter;
+import home.antonyaskiv.i_can.R;
+
+
+
 public class MapFragment extends Fragment {
+
+
+    @Inject
+    ImplMapFragmentPresenter implMapFragmentPresenter;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";

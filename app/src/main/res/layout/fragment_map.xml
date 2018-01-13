@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="home.antonyaskiv.i_can.MapFragment">
+    tools:context="home.antonyaskiv.i_can.View.MapFragment">
 
     <com.indoorway.android.map.sdk.view.IndoorwayMapView
         android:layout_width="match_parent"

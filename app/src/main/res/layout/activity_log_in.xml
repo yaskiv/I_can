@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="home.antonyaskiv.i_can.LogInActivity">
+    tools:context="home.antonyaskiv.i_can.View.LogInActivity">
 
     <Button
         android:id="@+id/button_sign_in"

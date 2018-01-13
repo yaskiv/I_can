@@ -3,6 +3,16 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/a.dummy">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="/fragment.java">
           <value>
             <set />
@@ -23,7 +33,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/build/generated/source/apt/debug/home/antonyaskiv/i_can/Component/DaggerAppComponent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Application/App.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Component/AppComponent.java">
           <value>
             <set />
           </value>
@@ -59,6 +84,41 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Model/State.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Modules/AppModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Modules/ImplMapFragmentPresenterModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Modules/MapFragmentModul.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Presenters/ImplMapFragmentPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/View/LogInActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/View/MainActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/View/MapFragment.java">
           <value>
             <set />
           </value>

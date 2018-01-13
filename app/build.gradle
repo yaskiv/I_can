@@ -36,12 +36,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
+    compile 'com.google.dagger:dagger:2.11'
     compile 'com.google.firebase:firebase-core:11.8.0'
     compile("com.indoorway.android:common:2.0.4")
     compile("com.indoorway.android:map:2.0.4")
     compile("com.indoorway.android:location:2.0.4")
     compile("com.indoorway.android:qrcode:2.0.4")
     compile("com.indoorway.android:fragments:2.0.4")
+    annotationProcessor "com.google.dagger:dagger-compiler:2.11"
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "485516728809",
+    "firebase_url": "https://ican-b762d.firebaseio.com",
+    "project_id": "ican-b762d",
+    "storage_bucket": "ican-b762d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:485516728809:android:edc68e25a8e5938a",
+        "android_client_info": {
+          "package_name": "home.antonyaskiv.i_can"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "485516728809-ssfupe75lq0742rc3ib7br1kb926qsti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "home.antonyaskiv.i_can",
+            "certificate_hash": "73fe93b525b4623180bbdb7dcb568a73f36b0781"
+          }
+        },
+        {
+          "client_id": "485516728809-25k1ub2nr2memut6pag9329fmiphsral.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "home.antonyaskiv.i_can",
+            "certificate_hash": "efb83307184b7c05c320e0ee16d273004cc815fd"
+          }
+        },
+        {
+          "client_id": "485516728809-kv1ufl5m060u4t25f93rqc3klscppmr6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMOBhTvYdF3i90m5X0YFHN0FAhn8l6An4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "485516728809-kv1ufl5m060u4t25f93rqc3klscppmr6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

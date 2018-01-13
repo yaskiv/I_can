@@ -18,6 +18,26 @@
             <set />
           </value>
         </entry>
+        <entry key="$USER_HOME$/.gradle/caches/transforms-1/files-1.1/common-2.0.4.aar/c5cf053b1788408907d2b1ca8ad3b18a/jars/classes.jar!/com/indoorway/android/common/sdk/model/proximity/IndoorwayNotificationInfo.class">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/.gradle/caches/transforms-1/files-1.1/common-2.0.4.aar/c5cf053b1788408907d2b1ca8ad3b18a/jars/classes.jar!/com/indoorway/android/common/sdk/model/proximity/IndoorwayProximityEvent.class">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/.gradle/caches/transforms-1/files-1.1/location-2.0.4.aar/057cee084df7d4563f6d9ff2b196645e/jars/classes.jar!/com/indoorway/android/location/sdk/controller/instance/StateController.class">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/.gradle/caches/transforms-1/files-1.1/map-2.0.4.aar/13bdcd0e16d7d9343be948fff10d341d/jars/classes.jar!/com/indoorway/android/map/sdk/view/IndoorwayMapView.class">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/.idea/sonarIssues.xml">
           <value>
             <set />
@@ -34,6 +54,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/build/generated/source/apt/debug/home/antonyaskiv/i_can/Component/DaggerAppComponent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/google-services.json">
           <value>
             <set />
           </value>
@@ -68,6 +93,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Model/Level.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Model/Levels.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Model/Location.java">
           <value>
             <set />
@@ -79,6 +114,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Model/Person.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Model/ProximityStopService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/home/antonyaskiv/i_can/Model/Road.java">
           <value>
             <set />
           </value>

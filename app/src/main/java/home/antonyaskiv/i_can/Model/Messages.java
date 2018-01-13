@@ -11,6 +11,7 @@ public class Messages {
     private Categories m_Category;
     private Person m_Owner;
 
+
     public Integer getM_Id() {
         return m_Id;
     }

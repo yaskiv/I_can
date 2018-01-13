@@ -13,6 +13,16 @@ public class Person {
     private String p_email;
     private List<Categories> p_List_of_subscribes;
     private Location p_Last_location;
+    private Level p_Level;
+
+    public Level getP_Level() {
+        return p_Level;
+    }
+
+    public void setP_Level(Level p_Level) {
+        this.p_Level = p_Level;
+    }
+
     private State p_State;
 
     public Person(String p_Name, String p_Surname, String p_Login, String p_email, List<Categories> p_List_of_subscribes, State p_State) {

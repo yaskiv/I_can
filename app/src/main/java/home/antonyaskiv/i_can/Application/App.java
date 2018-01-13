@@ -2,6 +2,8 @@ package home.antonyaskiv.i_can.Application;
 
 import android.app.Application;
 
+import com.indoorway.android.common.sdk.IndoorwaySdk;
+
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
@@ -26,6 +28,10 @@ public class App extends Application {
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         appComponent=buildComponent();
+        IndoorwaySdk.initContext(this);
+
+
+        IndoorwaySdk.configure("466b674b-ebd5-4db9-98ba-456d242afbf4");
     }
 
     protected AppComponent buildComponent()

@@ -8,6 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.indoorway.android.common.sdk.listeners.generic.Action0;
+import com.indoorway.android.common.sdk.listeners.generic.Action1;
+import com.indoorway.android.common.sdk.model.IndoorwayMap;
+import com.indoorway.android.common.sdk.model.IndoorwayNode;
+import com.indoorway.android.common.sdk.model.IndoorwayObjectParameters;
+import com.indoorway.android.map.sdk.view.IndoorwayMapView;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
 import home.antonyaskiv.i_can.Presenters.ImplMapFragmentPresenter;
@@ -74,8 +83,34 @@ public class MapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        View view=inflater.inflate(R.layout.fragment_map, container, false);
+        IndoorwayMapView indoorwayMapView = view.findViewById(R.id.mapView);
+        indoorwayMapView
+                // optional: assign callback for map loaded event
+                .setOnMapLoadCompletedListener(new Action1<IndoorwayMap>() {
+                    @Override
+                    public void onAction(IndoorwayMap indoorwayMap) {
+                        // called on every new map load success
+
+                        // access to paths graph
+                        List<IndoorwayNode> paths = indoorwayMap.getPaths();
+
+                        // access to map objects
+                        List<IndoorwayObjectParameters> mapObjects = indoorwayMap.getObjects();
+                    }
+                });
+        indoorwayMapView
+                // optional: assign callback for map loading failure
+                .setOnMapLoadFailedListener(new Action0() {
+                    @Override
+                    public void onAction() {
+                        // called on every map load error
+                    }
+                });
+        indoorwayMapView
+                // perform map loading using building UUID and map UUID
+                .load("CScrSxCVhQg", "gVI7XXuBFCQ");
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

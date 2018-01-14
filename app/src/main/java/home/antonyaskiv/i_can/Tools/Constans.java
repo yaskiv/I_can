@@ -7,7 +7,7 @@ package home.antonyaskiv.i_can.Tools;
 public class Constans {
     public static final String FIREBASE_PERSONS = "persons";
     public static final String FIREBASE_MESSAGES = "messages";
-
+    public static final String FIREBASE_PERSON_EMAIL = "p_Email";
     public static final String FIREBASE_PERSON_NAME = "p_name";
     public static final String FIREBASE_PERSON_SURNAME = "p_Surname";
     public static final String FIREBASE_PERSON_LIST_OF_SUBSCRIBES = "p_List_of_subscribes";

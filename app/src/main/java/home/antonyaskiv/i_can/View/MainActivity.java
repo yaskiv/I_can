@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ImplMapFragmentPresenter.getMessageFromFirebase();
+        //ImplMapFragmentPresenter.getMessageFromFirebase();
         /*userReference = ImplMapFragmentPresenter.getUserData();
         userReference.addValueEventListener(userEventListener);
 

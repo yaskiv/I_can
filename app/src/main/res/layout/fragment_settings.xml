@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:background="@color/white"
     tools:context="home.antonyaskiv.i_can.View.SettingsFragment">
 
@@ -42,8 +42,10 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
+        android:id="@+id/log_out"
         android:layout_width="match_parent"
-        android:layout_height="100pt"
-        android:id="@+id/log_out"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/input_layout_last_name" />
 
 </RelativeLayout>

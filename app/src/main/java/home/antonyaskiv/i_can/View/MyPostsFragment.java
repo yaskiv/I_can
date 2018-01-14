@@ -15,20 +15,7 @@ import home.antonyaskiv.i_can.R;
 
 public class MyPostsFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
-
-    public static MyPostsFragment newInstance(String param1, String param2) {
-        MyPostsFragment fragment = new MyPostsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     public MyPostsFragment() {
     }
@@ -36,10 +23,7 @@ public class MyPostsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
         setHasOptionsMenu(true);
     }
 

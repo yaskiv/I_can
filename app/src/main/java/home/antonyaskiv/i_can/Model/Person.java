@@ -11,8 +11,16 @@ public class Person {
     private String p_Surname;
     private String p_email;
     private List<Categories> p_List_of_subscribes;
-    private Location p_Last_location;
     private Level p_Level;
+    private Location location;
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     public Level getP_Level() {
         return p_Level;
@@ -24,12 +32,14 @@ public class Person {
 
     private State p_State;
 
-    public Person(String p_Name, String p_Surname, String p_email, List<Categories> p_List_of_subscribes, State p_State) {
+    public Person(String p_Name, String p_Surname, String p_email,
+                  List<Categories> p_List_of_subscribes,Location location,Level level) {
         this.p_Name = p_Name;
         this.p_Surname = p_Surname;
         this.p_email = p_email;
         this.p_List_of_subscribes = p_List_of_subscribes;
-        this.p_State = p_State;
+        this.p_Level=level;
+        this.location=location;
     }
 
     public String getP_Name() {
@@ -64,13 +74,9 @@ public class Person {
         this.p_List_of_subscribes = p_List_of_subscribes;
     }
 
-    public Location getP_Last_location() {
-        return p_Last_location;
-    }
 
-    public void setP_Last_location(Location p_Last_location) {
-        this.p_Last_location = p_Last_location;
-    }
+
+
 
     public State getP_State() {
         return p_State;

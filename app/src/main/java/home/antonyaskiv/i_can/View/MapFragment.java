@@ -12,12 +12,20 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.indoorway.android.common.sdk.listeners.generic.Action0;
 import com.indoorway.android.common.sdk.listeners.generic.Action1;
 import com.indoorway.android.common.sdk.model.Coordinates;
@@ -33,16 +41,24 @@ import com.indoorway.android.map.sdk.view.drawable.figures.DrawableText;
 import com.indoorway.android.map.sdk.view.drawable.layers.MarkersLayer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import home.antonyaskiv.i_can.Application.App;
+import home.antonyaskiv.i_can.Model.Categories;
 import home.antonyaskiv.i_can.Model.Level;
 import home.antonyaskiv.i_can.Model.Levels;
 import home.antonyaskiv.i_can.Model.Location;
+import home.antonyaskiv.i_can.Model.Messages;
+import home.antonyaskiv.i_can.Model.Person;
 import home.antonyaskiv.i_can.Model.Road;
 import home.antonyaskiv.i_can.Presenters.ImplMapFragmentPresenter;
 import home.antonyaskiv.i_can.R;
+import home.antonyaskiv.i_can.Tools.Constans;
+import home.antonyaskiv.i_can.View.Adapters.AdpterForRecyclerViewOnMapFragment;
 
 
 public class MapFragment extends Fragment {
@@ -53,12 +69,14 @@ public class MapFragment extends Fragment {
     @Inject
     ImplMapFragmentPresenter implMapFragmentPresenter;
 
-
+    private IndoorwayMapView indoorwayMapView;
     private OnFragmentInteractionListener mListener;
     private IndoorwayPosition currentPosition;
     private Levels levels;
     private Boolean isInRoadToOtherLevel =false;
      Road road;
+    private RecyclerView recyclerView;
+
     public MapFragment() {
         // Required empty public constructor
     }
@@ -69,7 +87,8 @@ public class MapFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        App.getAppComponent().inject(this);
+        implMapFragmentPresenter.initMaoFragment(this);
         setHasOptionsMenu(true);
     }
     private void ChceckLocation()
@@ -113,21 +132,22 @@ public class MapFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         initListOfLevels();
-
         CheckPermissions();
         ChceckLocation();
         View view=inflater.inflate(R.layout.fragment_map, container, false);
-        final IndoorwayMapView indoorwayMapView = view.findViewById(R.id.mapView);
+        indoorwayMapView= view.findViewById(R.id.mapView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL, false);
+        recyclerView = view.findViewById(R.id.recycler_mapFr);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-       /* indoorwayMapView
-                // perform map loading using building UUID and map UUID
-                .load("CScrSxCVhQg", "3-_M01M3r5w");*/
+
+        getMessageFromFirebase();
         onChangeState(indoorwayMapView);
         onErrorState();
+
         onChangePosition(indoorwayMapView);
-        MarkersLayer myLayer = indoorwayMapView.getMarker().addLayer(5);
-        myLayer.add(new DrawableText("1",new Coordinates( 52.22201649388719, 21.00672578578200),"Text",2));
-        Button btb=view.findViewById(R.id.navigat);
+         Button btb=view.findViewById(R.id.navigat);
         road=new Road(  new Coordinates( 52.2221864, 21.0070076)
                 ,
                 new Level("7-QLYjkafkE",0,
@@ -137,13 +157,96 @@ public class MapFragment extends Fragment {
         btb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigate(indoorwayMapView,road.getCoordinates(),road.getLevel()
+                Navigate(road.getCoordinates(),road.getLevel()
                         );
             }
         });
 
 
         return view;
+    }
+    public  void getMessageFromFirebase(){
+        implMapFragmentPresenter.insertMessage();
+        final List<Messages> listMessages = new ArrayList<>();
+        implMapFragmentPresenter.userReference= implMapFragmentPresenter.firebaseDatabase.getInstance().getReference();
+        implMapFragmentPresenter.userEventListener = new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Messages> listMessages = new ArrayList<>();
+                HashMap<String,Person> listPersons = new HashMap<>();
+                HashMap<String, HashMap<String, Object>> mapPersons = (HashMap<String, HashMap<String, Object>>) dataSnapshot.child(Constans.FIREBASE_PERSONS).getValue();
+                for (Map.Entry<String, HashMap<String, Object>> entry : mapPersons.entrySet()) {
+                    HashMap<String, Object> values = entry.getValue();
+
+                    String name = String.valueOf(values.get(Constans.FIREBASE_PERSON_NAME));
+                    String surName = String.valueOf(values.get(Constans.FIREBASE_PERSON_SURNAME));
+                    String email = String.valueOf(values.get(Constans.FIREBASE_PERSON_EMAIL));
+                    List subscribes = (List) values.get(Constans.FIREBASE_MESSAGES_CATEGORY);
+
+                    Coordinates coordinates = null;
+                    String level_uuid = null;
+                    Integer level_num = null;
+                    if(values.get(Constans.FIREBASE_PERSON_LEVEL)!= null) {
+                        HashMap<String, Object> valuesLevel = (HashMap<String, Object>) values.get(Constans.FIREBASE_PERSON_LEVEL);
+                        level_uuid = String.valueOf(valuesLevel.get(Constans.FIREBASE_PERSON_LEVEL_UUID));
+                        Double level_lon = (Double) valuesLevel.get(Constans.FIREBASE_PERSON_LEVEL_LON);
+                        Double level_lat = (Double) valuesLevel.get(Constans.FIREBASE_PERSON_LEVEL_LAT);
+                        level_num = ((Long) valuesLevel.get(Constans.FIREBASE_PERSON_LEVEL_NUMBER)).intValue();
+                        coordinates = new Coordinates(level_lat,level_lon);
+                    }
+                    Coordinates coordinatesLocation = null;
+                    if(values.get(Constans.FIREBASE_PERSON_CORDINATES) != null) {
+                        HashMap<String, Object> valuesLocation = (HashMap<String, Object>) values.get(Constans.FIREBASE_PERSON_CORDINATES);
+                        Double location_lat = (Double) valuesLocation.get(Constans.FIREBASE_PERSON_LOCATION_LAT);
+                        Double location_lon = (Double) valuesLocation.get(Constans.FIREBASE_PERSON_LOCATION_LON);
+                        coordinatesLocation = new Coordinates(location_lat, location_lon);
+                    }
+
+                    Person person;
+                    if(coordinatesLocation != null && coordinates != null){
+                        person = new Person(name,surName,email,subscribes
+                                ,new Location(coordinatesLocation),new Level(level_uuid,level_num,new Location(coordinates)));
+                    } else {
+                        person = new Person(name,surName,email,subscribes
+                                ,null,null);
+                    }
+
+                    listPersons.put(entry.getKey(),person);
+                }
+
+
+                HashMap<String, HashMap<String, Object>> mapMessage = (HashMap<String, HashMap<String, Object>>) dataSnapshot.child(Constans.FIREBASE_MESSAGES).getValue();
+                for (Map.Entry<String, HashMap<String, Object>> entry : mapMessage.entrySet()) {
+                    HashMap<String, Object> values = entry.getValue();
+
+                    Integer id = ((Long)values.get(Constans.FIREBASE_MESSAGES_ID)).intValue();
+                    String title = String.valueOf(values.get(Constans.FIREBASE_MESSAGES_TITTLE));
+                    String text = String.valueOf(values.get(Constans.FIREBASE_MESSAGES_TEXT));
+                    String category = String.valueOf(values.get(Constans.FIREBASE_MESSAGES_CATEGORY));
+                    String owner = String.valueOf(values.get(Constans.FIREBASE_MESSAGES_OWNER));
+                    Messages messages = new Messages(id,title,text,new Categories(category),listPersons.get(owner));
+                    listMessages.add(messages);
+                }
+                initRecycler(listMessages);
+                Log.d("blablabla ", String.valueOf(listMessages.size()));
+            }
+
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        implMapFragmentPresenter.userReference.addValueEventListener(implMapFragmentPresenter.userEventListener);
+        implMapFragmentPresenter. userReference.getDatabase().toString();
+
+    }
+    public void initRecycler(List<Messages> list) {
+
+        AdpterForRecyclerViewOnMapFragment adapter = new AdpterForRecyclerViewOnMapFragment(list,getContext(),this );
+        recyclerView.setAdapter(adapter);
     }
 
     private void initListOfLevels() {
@@ -161,17 +264,19 @@ public class MapFragment extends Fragment {
         levels.setAllLevels(levelList);
     }
 
-    private Integer searchNumberOfLevel(String uuid,Levels levels)
+    private Level searchNumberOfLevel(String uuid,Levels levels)
 {
  for (Level level:levels.getAllLevels())
  {
      if(level.getUUID().equals(uuid))
      {
-         return level.getNumber();
+         return level;
      }
  }
- return -1;
-}/*
+ return null;
+}
+
+/*
 private void addProximity(Coordinates coordinates)
 {
     IndoorwayLocationSdk.instance().customProximityEvents()
@@ -188,18 +293,18 @@ private void addProximity(Coordinates coordinates)
                     new IndoorwayNotificationInfo("title", "description", "url", "image") // (optional) data to show in notification
             ));
 }*/
-    private void Navigate(IndoorwayMapView indoorwayMapView, Coordinates coordinates, Level level) {
+    public void Navigate(Coordinates coordinates, Level level) {
         if( currentPosition.getMapUuid().equals(level.getUUID()))
         {
         indoorwayMapView.getNavigation()
-                .start(currentPosition,level.getLocation().getCoordinates() );
+                .start(currentPosition,coordinates );
         isInRoadToOtherLevel =false;
 
         }
         else
             {
                 String direction;
-                if(searchNumberOfLevel(currentPosition.getMapUuid(),levels)>level.getNumber())
+                if(searchNumberOfLevel(currentPosition.getMapUuid(),levels).getNumber()>level.getNumber())
                 {
                     direction="Down";
                 }
@@ -217,20 +322,30 @@ private void addProximity(Coordinates coordinates)
             }
     }
 
-
+    long timestamp=0;
 
     private void onChangePosition(final IndoorwayMapView indoorwayMapView) {
         listener = new Action1<IndoorwayPosition>() {
             @Override
-            public void onAction(IndoorwayPosition position) {
+            public void onAction(final IndoorwayPosition position) {
                 // store last position as a field
                 currentPosition = position;
                 Log.d("Position", String.valueOf(currentPosition.getCoordinates().getLatitude()));
                 Log.d("Position", String.valueOf(currentPosition.getCoordinates().getLongitude()));
 
-
-                Log.d("Position",currentPosition.getMapUuid().toString());
                 indoorwayMapView.getPosition().setPosition(position, true);
+                Log.d("Position",currentPosition.getMapUuid().toString());
+                long currentTimestamp = System.currentTimeMillis() / 1000;
+                if(timestamp != 0 && currentTimestamp-timestamp<10){
+                    return;
+                }
+                timestamp = System.currentTimeMillis() / 1000;
+                Level level=searchNumberOfLevel(position.getMapUuid(), levels);
+                implMapFragmentPresenter.insertOrUpdateLocation(new Location(position.getCoordinates()));
+                implMapFragmentPresenter.insertOrUpdateLevel
+                        (new Level(position.getMapUuid(),
+                                level.getNumber()
+                                , level.getLocation()));
 
             }
         };
@@ -282,7 +397,7 @@ private void addProximity(Coordinates coordinates)
                        if(isInRoadToOtherLevel)
                        {
                            indoorwayMapView.getNavigation().stop();
-                           Navigate(indoorwayMapView,road.getCoordinates(),road.getLevel());
+                           Navigate(road.getCoordinates(),road.getLevel());
                        }
                         List<IndoorwayNode> paths = indoorwayMap.getPaths();
 

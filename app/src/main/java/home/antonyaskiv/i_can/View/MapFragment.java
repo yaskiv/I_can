@@ -148,6 +148,7 @@ public class MapFragment extends Fragment {
 
 
         getMessageFromFirebase();
+        getLevelsFromFirebase();
         onChangeState(indoorwayMapView);
         onErrorState();
 
@@ -253,7 +254,35 @@ public class MapFragment extends Fragment {
         AdpterForRecyclerViewOnMapFragment adapter = new AdpterForRecyclerViewOnMapFragment(list,getContext(),this );
         recyclerView.setAdapter(adapter);
     }
+    public  void getLevelsFromFirebase(){
+        implMapFragmentPresenter.userReference = implMapFragmentPresenter.firebaseDatabase.getInstance().getReference();
+        ValueEventListener userEventListenerLevels = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Level> listLevels = new ArrayList<>();
 
+                HashMap<String, HashMap<String, Object>> mapMessage = (HashMap<String, HashMap<String, Object>>) dataSnapshot.child(Constans.FIREBASE_LEVELS).getValue();
+                for (Map.Entry<String, HashMap<String, Object>> entry : mapMessage.entrySet()) {
+                    HashMap<String, Object> values = entry.getValue();
+
+                    Integer number = ((Long) values.get(Constans.FIREBASE_LEVELS_NUMBER)).intValue();
+                    String uuid = String.valueOf(values.get(Constans.FIREBASE_LEVELS_UUID));
+                    Double lon = (Double) values.get(Constans.FIREBASE_LEVELS_LON);
+                    Double lat = (Double) values.get(Constans.FIREBASE_LEVELS_LAT);
+                    Coordinates coordinates = new Coordinates(lat, lon);
+                    Level level = new Level(uuid, number, new Location(coordinates));
+                    listLevels.add(level);
+                }
+                levels.setAllLevels(listLevels);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        implMapFragmentPresenter.userReference.addValueEventListener(userEventListenerLevels);
+    }
     private void initListOfLevels() {
         levels=new Levels();
         List<Level> levelList=new ArrayList<>();

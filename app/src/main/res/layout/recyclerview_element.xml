@@ -9,22 +9,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:weightSum="5"
+        android:weightSum="17"
         android:layout_height="100dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_weight="4"
+            android:layout_weight="7"
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/logo"
+                android:src="@drawable/ic_person_black_24dp"
                 android:layout_margin="5dp"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -33,28 +34,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
              android:id="@+id/title"
+                android:textStyle="bold"
                 android:padding="5dp"
                 android:text="Title" />
             <TextView
                 android:id="@+id/descriprion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textSize="11sp"
                 android:padding="5dp"
                 android:text="Description" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/navigate_to_message"
-                    android:layout_gravity="end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+
 
 
                 </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="6"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_navigation_black_24dp"
+                android:id="@+id/navigate_to_message"
+                android:layout_gravity="center"
+                android:layout_width="44dp"
+                android:layout_height="44dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

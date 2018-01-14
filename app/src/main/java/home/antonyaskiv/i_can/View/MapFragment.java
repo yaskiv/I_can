@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,13 +38,17 @@ import com.indoorway.android.location.sdk.IndoorwayLocationSdk;
 import com.indoorway.android.location.sdk.model.IndoorwayLocationSdkError;
 import com.indoorway.android.location.sdk.model.IndoorwayLocationSdkState;
 import com.indoorway.android.map.sdk.view.IndoorwayMapView;
+import com.indoorway.android.map.sdk.view.drawable.figures.DrawableCircle;
 import com.indoorway.android.map.sdk.view.drawable.figures.DrawableText;
 import com.indoorway.android.map.sdk.view.drawable.layers.MarkersLayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -147,20 +152,7 @@ public class MapFragment extends Fragment {
         onErrorState();
 
         onChangePosition(indoorwayMapView);
-         Button btb=view.findViewById(R.id.navigat);
-        road=new Road(  new Coordinates( 52.2221864, 21.0070076)
-                ,
-                new Level("7-QLYjkafkE",0,
-                        new Location(
-                                new Coordinates( 52.2222302, 21.0070076))));
 
-        btb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigate(road.getCoordinates(),road.getLevel()
-                        );
-            }
-        });
 
 
         return view;
@@ -226,7 +218,9 @@ public class MapFragment extends Fragment {
                     String category = String.valueOf(values.get(Constans.FIREBASE_MESSAGES_CATEGORY));
                     String owner = String.valueOf(values.get(Constans.FIREBASE_MESSAGES_OWNER));
                     Messages messages = new Messages(id,title,text,new Categories(category),listPersons.get(owner));
-                    listMessages.add(messages);
+                    if(!owner.equals(implMapFragmentPresenter.getLoggedUserUid())) {
+                        listMessages.add(messages);
+                    }
                 }
                 initRecycler(listMessages);
                 Log.d("blablabla ", String.valueOf(listMessages.size()));
@@ -243,8 +237,19 @@ public class MapFragment extends Fragment {
         implMapFragmentPresenter. userReference.getDatabase().toString();
 
     }
+    List<Person> listP;
     public void initRecycler(List<Messages> list) {
+        listP=new ArrayList<>();
+        for (Messages messages: list)
+        {
+            listP.add(messages.getM_Owner());
+        }
+        Set<Person> hs = new HashSet<>();
+        hs.addAll(listP);
+        listP.clear();
+        listP.addAll(hs);
 
+        Log.d("List", String.valueOf(list.size()));
         AdpterForRecyclerViewOnMapFragment adapter = new AdpterForRecyclerViewOnMapFragment(list,getContext(),this );
         recyclerView.setAdapter(adapter);
     }
@@ -254,13 +259,13 @@ public class MapFragment extends Fragment {
         List<Level> levelList=new ArrayList<>();
         levelList.add(new Level("7-QLYjkafkE",0,
                 new Location(
-                        new Coordinates( 52.22201649388719, 21.00672578578200))));
+                        new Coordinates( 52.2222229, 21.0069496))));
         levelList.add(new Level("gVI7XXuBFCQ",1,
                 new Location(
-                        new Coordinates( 52.22201649388719, 21.00672578578200))));
+                        new Coordinates( 52.2222229, 21.0069496))));
         levelList.add(new Level("3-_M01M3r5w",2,
                 new Location(
-                        new Coordinates( 52.22201649388719, 21.00672578578200))));
+                        new Coordinates( 52.2222229, 21.0069496))));
         levels.setAllLevels(levelList);
     }
 
@@ -312,11 +317,12 @@ private void addProximity(Coordinates coordinates)
                     {
                         direction="UP";
                     }
+                    level=searchNumberOfLevel(level.getUUID(),levels);
                 MarkersLayer myLayer = indoorwayMapView.getMarker().addLayer(5);
                 myLayer.add(new DrawableText("lfgr",level.getLocation().getCoordinates(),direction,8));
 
                 indoorwayMapView.getNavigation()
-                        .start(currentPosition,coordinates );
+                        .start(currentPosition,level.getLocation().getCoordinates() );
                 isInRoadToOtherLevel =true;
 
             }
@@ -339,8 +345,10 @@ private void addProximity(Coordinates coordinates)
                 if(timestamp != 0 && currentTimestamp-timestamp<10){
                     return;
                 }
+
                 timestamp = System.currentTimeMillis() / 1000;
                 Level level=searchNumberOfLevel(position.getMapUuid(), levels);
+
                 implMapFragmentPresenter.insertOrUpdateLocation(new Location(position.getCoordinates()));
                 implMapFragmentPresenter.insertOrUpdateLevel
                         (new Level(position.getMapUuid(),
@@ -393,7 +401,22 @@ private void addProximity(Coordinates coordinates)
                 .setOnMapLoadCompletedListener(new Action1<IndoorwayMap>() {
                     @Override
                     public void onAction(IndoorwayMap indoorwayMap) {
+                    if(listP!=null) {
+                        for (Person person : listP) {
+                            MarkersLayer myLayer = indoorwayMapView.getMarker().addLayer(4);
+                            myLayer.add(
+                                    new DrawableCircle(
+                                            String.valueOf(new Random().nextInt()),
+                                            1, // radius in meters, eg. 0.4f
+                                            Color.RED, // circle background color, eg. Color.RED
+                                            Color.BLUE, // color of outline, eg. Color.BLUE
+                                            2, // width of outline in meters, eg. 0.1f
+                                            person.getLocation().getCoordinates() // coordinates of circle center point
+                                    )
+                            );
 
+                        }
+                    }
                        if(isInRoadToOtherLevel)
                        {
                            indoorwayMapView.getNavigation().stop();

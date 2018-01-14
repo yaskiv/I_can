@@ -1,10 +1,13 @@
 package home.antonyaskiv.i_can.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by AntonYaskiv on 13.01.2018.
  */
 
-public class Level {
+public class Level implements Parcelable {
     private  String UUID;
     private Integer number;
     private Location location;
@@ -39,4 +42,34 @@ public class Level {
     public void setLocation(Location location) {
         this.location = location;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.UUID);
+        dest.writeValue(this.number);
+        dest.writeParcelable(this.location, flags);
+    }
+
+    protected Level(Parcel in) {
+        this.UUID = in.readString();
+        this.number = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.location = in.readParcelable(Location.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Level> CREATOR = new Parcelable.Creator<Level>() {
+        @Override
+        public Level createFromParcel(Parcel source) {
+            return new Level(source);
+        }
+
+        @Override
+        public Level[] newArray(int size) {
+            return new Level[size];
+        }
+    };
 }

@@ -89,8 +89,8 @@ public class LogInActivity extends AppCompatActivity  {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             String[] firstLastName = user.getDisplayName().split(" ");
-                            Person person = new Person(firstLastName[0],firstLastName[1],user.getEmail(),
-                                    null,null,null);
+                            Person person = new Person(firstLastName[0], firstLastName[1], user.getEmail(),
+                                    null, null, null);
                             ImplMapFragmentPresenter.insertOrUpdatePerson(person);
                             Intent intent;
                             if(false != true) {

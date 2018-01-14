@@ -36,7 +36,7 @@ public class AdpterForRecyclerViewOnMapFragment extends RecyclerView.Adapter {
         ImageView logo;
         TextView title;
         TextView desc;
-        Button navigateTo;
+        ImageView navigateTo;
         public CardViewHolder(View itemView) {
             super(itemView);
             this.logo=itemView.findViewById(R.id.logo);

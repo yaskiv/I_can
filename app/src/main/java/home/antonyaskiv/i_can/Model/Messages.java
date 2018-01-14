@@ -1,10 +1,13 @@
 package home.antonyaskiv.i_can.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by AntonYaskiv on 13.01.2018.
  */
 
-public class Messages {
+public class Messages implements Parcelable {
     private Integer m_Id;
     private String m_Title;
     private String m_Text;
@@ -58,4 +61,38 @@ public class Messages {
     public void setM_Owner(Person m_Owner) {
         this.m_Owner = m_Owner;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.m_Id);
+        dest.writeString(this.m_Title);
+        dest.writeString(this.m_Text);
+        dest.writeParcelable(this.m_Category, flags);
+        dest.writeParcelable(this.m_Owner, flags);
+    }
+
+    protected Messages(Parcel in) {
+        this.m_Id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.m_Title = in.readString();
+        this.m_Text = in.readString();
+        this.m_Category = in.readParcelable(Categories.class.getClassLoader());
+        this.m_Owner = in.readParcelable(Person.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Messages> CREATOR = new Parcelable.Creator<Messages>() {
+        @Override
+        public Messages createFromParcel(Parcel source) {
+            return new Messages(source);
+        }
+
+        @Override
+        public Messages[] newArray(int size) {
+            return new Messages[size];
+        }
+    };
 }

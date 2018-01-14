@@ -1,12 +1,16 @@
 package home.antonyaskiv.i_can.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by AntonYaskiv on 13.01.2018.
  */
 
-public class Person {
+public class Person implements Parcelable {
     private String p_Name;
     private String p_Surname;
     private String p_email;
@@ -85,4 +89,43 @@ public class Person {
     public void setP_State(State p_State) {
         this.p_State = p_State;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.p_Name);
+        dest.writeString(this.p_Surname);
+        dest.writeString(this.p_email);
+        dest.writeList(this.p_List_of_subscribes);
+        dest.writeParcelable(this.p_Level, flags);
+        dest.writeParcelable(this.location, flags);
+        dest.writeParcelable(this.p_State, flags);
+    }
+
+    protected Person(Parcel in) {
+        this.p_Name = in.readString();
+        this.p_Surname = in.readString();
+        this.p_email = in.readString();
+        this.p_List_of_subscribes = new ArrayList<Categories>();
+        in.readList(this.p_List_of_subscribes, Categories.class.getClassLoader());
+        this.p_Level = in.readParcelable(Level.class.getClassLoader());
+        this.location = in.readParcelable(Location.class.getClassLoader());
+        this.p_State = in.readParcelable(State.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Person> CREATOR = new Parcelable.Creator<Person>() {
+        @Override
+        public Person createFromParcel(Parcel source) {
+            return new Person(source);
+        }
+
+        @Override
+        public Person[] newArray(int size) {
+            return new Person[size];
+        }
+    };
 }

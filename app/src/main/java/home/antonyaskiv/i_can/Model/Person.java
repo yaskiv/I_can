@@ -9,7 +9,6 @@ import java.util.List;
 public class Person {
     private String p_Name;
     private String p_Surname;
-    private String p_Login;
     private String p_email;
     private List<Categories> p_List_of_subscribes;
     private Location p_Last_location;
@@ -25,10 +24,9 @@ public class Person {
 
     private State p_State;
 
-    public Person(String p_Name, String p_Surname, String p_Login, String p_email, List<Categories> p_List_of_subscribes, State p_State) {
+    public Person(String p_Name, String p_Surname, String p_email, List<Categories> p_List_of_subscribes, State p_State) {
         this.p_Name = p_Name;
         this.p_Surname = p_Surname;
-        this.p_Login = p_Login;
         this.p_email = p_email;
         this.p_List_of_subscribes = p_List_of_subscribes;
         this.p_State = p_State;
@@ -48,14 +46,6 @@ public class Person {
 
     public void setP_Surname(String p_Surname) {
         this.p_Surname = p_Surname;
-    }
-
-    public String getP_Login() {
-        return p_Login;
-    }
-
-    public void setP_Login(String p_Login) {
-        this.p_Login = p_Login;
     }
 
     public String getP_email() {

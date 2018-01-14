@@ -11,6 +11,13 @@ public class Messages {
     private Categories m_Category;
     private Person m_Owner;
 
+    public Messages(Integer m_Id, String m_Title, String m_Text, Categories m_Category, Person m_Owner) {
+        this.m_Id = m_Id;
+        this.m_Title = m_Title;
+        this.m_Text = m_Text;
+        this.m_Category = m_Category;
+        this.m_Owner = m_Owner;
+    }
 
     public Integer getM_Id() {
         return m_Id;

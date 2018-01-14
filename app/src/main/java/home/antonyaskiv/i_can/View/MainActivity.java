@@ -19,6 +19,7 @@ import android.view.View;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import home.antonyaskiv.i_can.Presenters.ImplMapFragmentPresenter;
 import home.antonyaskiv.i_can.R;
 
 public class MainActivity extends AppCompatActivity
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ImplMapFragmentPresenter.getMessageFromFirebase();
         /*userReference = ImplMapFragmentPresenter.getUserData();
         userReference.addValueEventListener(userEventListener);
 

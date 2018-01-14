@@ -7,6 +7,10 @@ package home.antonyaskiv.i_can.Model;
 public class Categories {
     private String c_Name;
 
+    public Categories(String c_Name) {
+        this.c_Name = c_Name;
+    }
+
     public String getC_Name() {
         return c_Name;
     }
